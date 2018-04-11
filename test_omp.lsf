@@ -1,0 +1,62 @@
+#!/bin/bash --login
+#BSUB -J GE-helloOmpC_gnu
+#BSUB -q panther
+#BSUB -e helloOmpC-%J.e
+#BSUB -o helloOmpC-%J.o
+#BSUB -n 1
+#BSUB -W 00:10
+
+# Default loaded compiler module is gcc module
+# load the necessary modules to compile with GNU
+module load gcc7/7.1.0
+
+# leave in, it lists the environment loaded by the modules
+module list
+
+#  Note: SLURM_JOBID is a unique number for every job.
+#  These are generic variables
+
+#
+echo " my lsb_jobid is $LSB_JOBID "
+echo " my lsb_remote jobid is $LSB_REMOTEJID "
+
+EXECUTABLE=hello_omp_gnu 
+SCRATCH=${PT}/run_helloOmpC_gnu/$LSB_REMOTEJID
+
+###############################################
+# Creates a unique directory in the SCRATCH directory for this job to run in.
+if [ ! -d $SCRATCH ]; then 
+    mkdir -p $SCRATCH 
+fi 
+echo SCRATCH is $SCRATCH
+
+################################################
+# declare the name of the output file or log file
+
+OUTPUT=helloOmpC_gnu.log
+
+#############################################
+#   Copy input files to $SCRATCH
+#   then change directory to $SCRATCH
+
+cp $PT/data_exe/$EXECUTABLE $SCRATCH
+
+cd $SCRATCH
+
+export OMP_NUM_THREADS=16
+
+echo $EXECUTABLE num threads is $OMP_NUM_THREADS
+
+./$EXECUTABLE > ${OUTPUT}
+
+#############################################
+# create a unique test file in the PT directory
+# this will signal the laucher script that the job as finished
+# so it it can copy the results back to CDS
+
+touch ${PT}/cpt$LSB_REMOTEJID
+
+echo helloOmpC_gnu job finished at  `date`
+
+
+

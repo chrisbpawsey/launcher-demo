@@ -9,7 +9,7 @@
 # cp the omp_hello.c source code
 
 #cp $GE_DIR/src/omp_hello.c .
-cp ../src/omp_hello.c .
+cp src/omp_hello.c .
 
 # This code is an OpenMP example that runs one 16-thread
 # OpenMP instance with one node.

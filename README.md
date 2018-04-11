@@ -15,8 +15,11 @@ the new **myenv** file.
 
 At this point you can either source your .profile
 > . $HOME/.profile
+
 or
+
 > source $HOME/.profile
+
 or logout and log back in.
 
 

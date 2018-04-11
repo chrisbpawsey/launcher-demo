@@ -7,7 +7,8 @@ README.md
 src/
 test_omp.lsf
 
-## fix environment add PT and PG environment variables 
+## fix environment for demo 
+## Add the PT and PG environment variables 
 > ./pt.sh
 
 This will create a ${HOME}/.myenv file and modify your ${HOME}.profile to source 
@@ -22,12 +23,13 @@ or
 
 or logout and log back in.
 
-
-
 to test 
-echo $PT
+
+>echo $PT
+
 it should show 
-/gpfs/panther/local/.....
+
+>/gpfs/panther/local/.....
 
 To run a job we use the launcher script to submit the job.  
 The launcher script 
@@ -40,6 +42,13 @@ $PT/data_exe
 then submits the test_omp.lsf job using bsub.
 
 ### NOTE must use NOHUP!! with launcher
-** nohup launcher.sh \& **
+
+>*nohup launcher.sh \&*
+
 or 
-** nohup launcher.sh > l1.log **
+
+>*nohup launcher.sh > l1.log \&*
+
+With the *tail* command you can see what is happening!!
+
+>tail -f nohup.out
